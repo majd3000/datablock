@@ -32,10 +32,11 @@ export function createTestButton(
                 }
 
                 const testItem = allItems[0];
-                const result = modal.jsExecutor.executeFunction(func, testItem, allItems);
+                const result = await modal.jsExecutor.executeFunction(func, testItem, allItems);
 
                 if (!isAction) {
-                     new Notice(`Test successful on item: ${testItem.name || 'Untitled'}\nResult: ${result}`);
+                    const resultString = typeof result === 'object' ? JSON.stringify(result, null, 2) : result;
+                    new Notice(`Test successful on item: ${testItem.name || 'Untitled'}\nResult: ${resultString}`);
                 } else {
                     new Notice(`Test successful! Action executed with item: ${testItem.name || 'Untitled'}`);
                 }
