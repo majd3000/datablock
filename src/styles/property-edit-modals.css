@@ -1,0 +1,107 @@
+/* Modal styling */
+
+.property-edit-modal.modal-large {
+    min-width: 600px;
+    min-height: 400px;
+}
+
+.modal-header h2 {
+    margin: 0 0 1em 0;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.character-counter {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 5px;
+}
+
+.range-info {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+.quick-dates {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.boolean-options {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.radio-option {
+    display: block;
+    margin: 8px 0;
+    cursor: pointer;
+}
+
+.radio-option input {
+    margin-right: 8px;
+}
+
+/* Hide the default empty header in custom modals */
+.modal:has(.datablock-edit.property-edit-modal) .modal-header {
+    display: none;
+}
+.modal:has(.datablock-edit) .modal-header {
+    padding: 8px 16px 0 16px;
+}
+
+.modal:has(.datablock-edit), .modal:has(.datablock-confirm-modal) {
+    width: 400px;
+}
+.modal:has(.datablock-edit.long-text) {
+    width: 575px;
+}
+.datablock-edit .setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.datablock-edit.select .setting-item, .datablock-edit.date .setting-item, .datablock-edit.boolean .setting-item{
+    flex-direction: row;
+}
+
+.datablock-edit.select .modal-content, .datablock-edit.date .setting-item,  .datablock-edit.boolean .setting-item {
+    margin-top: 24px;
+}
+.datablock-edit .setting-item .setting-item-info {
+    width: 100%;
+    margin-inline-end: unset;
+}
+
+.datablock-edit .setting-item .setting-item-control {
+    width: 100%;
+}
+.datablock-edit .setting-item .setting-item-control textarea {
+    width: 100%;
+}
+
+.datablock-edit .setting-item .setting-item-control input {
+    width: 100%;
+}
+
+.datablock-edit .setting-item-name {
+    font-size: 18px;
+}
+
+.modal-content.datablock-input-prompt.datablock-edit, .modal-content.datablock-confirm-modal.datablock-edit {
+    padding: 0 16px;
+    padding-bottom: 8px;
+}

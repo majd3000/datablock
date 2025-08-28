@@ -1,0 +1,152 @@
+.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.list-view .item {
+  display: flex;
+  align-items: center;
+  padding: 5.5px 10px;
+  border-radius: 4px;
+  background-color: var(--background-primary);
+  transition: background-color 0.2s ease;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.list-view .item:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.list-view .item-main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.list-view .item-title {
+  margin: 0;
+  font-weight: normal;
+}
+
+.list-view .item-description-container {
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+.list-view .item-metadata {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6.7px;
+  flex-shrink: 0;
+}
+
+.list-view .pill{
+  margin-left: 5.8px;
+  margin-right: 0;
+}
+
+.obsidian-view.list-view.row-reverse .item-metadata {
+  flex-direction: row-reverse;
+}
+
+.list-view .item-metadata .pills-container {
+  flex-grow: 0;
+  margin: 0;
+  flex-shrink: 1;
+  width: auto;
+  justify-content: flex-end;
+}
+
+.dataview-line-numbers .obsidian-view.list-view {
+  counter-reset: dataview-counter 0;
+}
+
+.dataview-line-numbers .list-view .item:before {
+  width: 1.8em !important;
+  font-size: 0.97em;
+  display: inline-block;
+  color: var(--text-faint);
+  counter-increment: dataview-counter;
+  content: counter(dataview-counter, decimal-leading-zero) " ";
+}
+
+.list-view img.favicon {
+  display: inline-block;
+  user-select: none;
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  margin-right: 7px;
+  border-radius: 3px;
+  padding: 3px;
+  align-content: center;
+  vertical-align: top;
+}
+
+.list-view .buttons-container{
+    flex-direction: row;
+    margin-top: 0;
+    gap: 2px
+}
+
+.list-view .action-button {
+    padding: 4px 10px;
+    margin-top: 0;
+    margin-left: 5px;
+    font-size: 12.5px;
+    border: 1px solid var(--color-base-30);
+    background-color: var(--color-base-25);
+    box-shadow: unset;
+}
+
+.list-view.half-hide-button .action-button {
+  border: none;
+  color: var(--text-faint);
+  background: unset;
+}
+
+.list-view.half-hide-button .action-button:hover {
+  color: var(--text-muted);
+}
+
+.list-view.half-hide-button .action-button:after {
+  content: "";
+  background-color: var(--color-base-50);
+  width: 0.1em;
+  height: 2em;
+  margin: 0 0em 0 1.5em;
+}
+
+.list-view .buttons-container input.datablock-checkbox-mode {
+  margin-right: 0;
+  margin-left: 8px
+}
+
+@media (max-width: 768px) {
+  .list-view .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .list-view .item-metadata {
+    width: 100%;
+    justify-content: flex-end;
+    flex-direction: row;
+    margin-top: 5px;
+  }
+  .list-view .item-metadata .pills-container {
+    order: 2;
+    justify-content: flex-start;
+  }
+  .list-view .item-metadata .action-button {
+    order: 1;
+    margin-left: 0;
+    margin-right: 5px;
+  }
+}

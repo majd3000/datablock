@@ -1,0 +1,10 @@
+{
+	"id": "datablock",
+	"name": "DataBlock",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Transforms data into customizable views like Kanban board, gallery, and list using code blocks",
+	"author": "majd3000",
+	"authorUrl": "https://github.com/majd3000",
+	"isDesktopOnly": true
+}

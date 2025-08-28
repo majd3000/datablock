@@ -1,0 +1,36 @@
+.datablock-edit-button {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: none;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 2px 4px;
+    background-color: var(--background-secondary);
+    border-radius: var(--radius-s);
+    font-size: var(--font-ui-x-small);
+    height: 26px;
+    width: 26px;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.datablock-edit-button:hover {
+    opacity: 1;
+}
+
+.datablock-render-child {
+    position: relative;
+}
+
+.datablock-render-child:hover .datablock-edit-button {  
+    display: flex;
+}
+.datablock-hide-confirm-modal .modal-content {
+    padding: 0px 16px 0 16px;
+}
+.is-live-preview .datablock-edit-button {
+    top: unset;
+    bottom: 2px;
+}

@@ -1,0 +1,255 @@
+import { App, Modal, Setting, Notice, TextAreaComponent } from 'obsidian';
+import { ButtonConfig } from '../types';
+import { DataBlockConfigModal } from './DataBlockConfigModal';
+import { buildActionInputs } from './components/settings-sections';
+import { createTestButton } from './components/field-config';
+import { stringToFunction, deepCloneWithFunctions, functionToCodeBlock, functionBodyToString } from '../utils/javascript-helper';
+import { JSTextarea } from './codemirror';
+
+export class EditButtonModal extends Modal {
+    private buttonConfig: ButtonConfig;
+    private onSubmit: (button: ButtonConfig) => void;
+    private dataSource: 'notes' | 'custom';
+    private detectedFields: string[];
+    private modal: DataBlockConfigModal;
+    private customTextField: JSTextarea;
+    private customActionField: JSTextarea;
+
+    constructor(
+        app: App,
+        buttonConfig: ButtonConfig,
+        dataSource: 'notes' | 'custom',
+        detectedFields: string[],
+        onSubmit: (button: ButtonConfig) => void,
+        modal: DataBlockConfigModal
+    ) {
+        super(app);
+        this.buttonConfig = deepCloneWithFunctions(buttonConfig);
+        this.dataSource = dataSource;
+        this.detectedFields = detectedFields;
+        this.onSubmit = onSubmit;
+        this.modal = modal;
+
+        // Legacy conversion handled in parser
+    }
+
+    onOpen(): void {
+        this.contentEl.empty();
+        this.titleEl.setText('Edit Button');
+        this.contentEl.addClass('datablock-add-item-modal');
+
+        if (this.dataSource === 'custom' && typeof this.buttonConfig.action !== 'function') {
+            this.buttonConfig.action = '' as any;
+        }
+
+        // Button Text Section
+        const textSection = this.contentEl.createDiv({ cls: 'button-text-section' });
+        
+        new Setting(textSection)
+            .setName('Content Type')
+            .addDropdown(dropdown => {
+                dropdown
+                    .addOption('text', 'Text Template')
+                    .addOption('property', 'Property Value')
+                    .addOption('dynamic', 'Custom JavaScript')
+                    .setValue(this.getTextType())
+                    .onChange(this.handleTextTypeChange.bind(this));
+            });
+
+        const textValueContainer = textSection.createDiv({ cls: 'text-value-container' });
+        this.buildTextInputs(textValueContainer);
+
+        // Action Section
+        // Action Section
+        const actionSection = this.contentEl.createDiv({ cls: 'button-action-section' });
+        const actionContainer = actionSection.createDiv({ cls: 'action-container' });
+        this.buildActionInputs(actionContainer);
+
+        // Footer
+        new Setting(this.contentEl)
+            .addButton(btn => 
+                btn.setButtonText('Cancel')
+                   .onClick(() => this.close())
+            )
+            .addButton(btn => 
+                btn.setButtonText('Save Changes')
+                   .setCta()
+                   .onClick(this.handleSubmit.bind(this))
+            );
+    }
+
+    private getTextType(): 'text' | 'property' | 'dynamic' {
+        if (typeof this.buttonConfig.text === 'function') return 'dynamic';
+        if (typeof this.buttonConfig.text === 'string' && this.buttonConfig.text.startsWith('property:')) return 'property';
+        return 'text';
+    }
+
+    private buildTextInputs(container: HTMLElement): void {
+        container.innerHTML = ''; // Clear previous inputs
+        const type = this.getTextType();
+
+        // Static text input
+        if (type === 'text') {
+            const staticContainer = container.createDiv({ cls: 'static-text-input' });
+            new Setting(staticContainer)
+                .setName('Button Text')
+                .addText(text => {
+                    text
+                        .setValue(this.buttonConfig.text as string || 'New Button')
+                        .onChange(value => {
+                            this.buttonConfig.text = value;
+                        });
+                });
+        }
+
+        // Property-based text input
+        if (type === 'property') {
+            const propertyContainer = container.createDiv({ cls: 'property-text-input' });
+            new Setting(propertyContainer)
+                .setName('Select Property')
+                .addDropdown(dropdown => {
+                    if (this.detectedFields && this.detectedFields.length > 0) {
+                        this.detectedFields.forEach(field => dropdown.addOption(field, field));
+                        const currentProp = typeof this.buttonConfig.text === 'string' ? this.buttonConfig.text.replace('property:', '') : this.detectedFields[0];
+                        dropdown.setValue(currentProp);
+                        // Set initial value
+                        if (dropdown.getValue()) {
+                            this.buttonConfig.text = `property:${dropdown.getValue()}`;
+                        }
+                    } else {
+                        dropdown.addOption('', 'No properties found');
+                        dropdown.setDisabled(true);
+                    }
+                    dropdown.onChange(value => {
+                        this.buttonConfig.text = `property:${value}`;
+                    });
+                });
+        }
+
+        // Dynamic JS textarea
+        if (type === 'dynamic') {
+            const dynamicContainer = container.createDiv({ cls: 'custom-input' });
+            const setting = new Setting(dynamicContainer)
+                .setName('JavaScript Expression')
+                .setDesc('Return the button text.');
+            
+            const editorContainer = setting.controlEl.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
+            let editor: JSTextarea;
+            const ta = new TextAreaComponent(editorContainer);
+            ta.inputEl.style.display = 'none';
+
+            this.customTextField = new JSTextarea(editorContainer, {
+                initialValue: functionToCodeBlock(this.buttonConfig.text),
+                onChange: (value) => {
+                    this.buttonConfig.text = stringToFunction(value) as any;
+                },
+                placeholder: 'return `Action for ${item.name}`'
+            });
+            createTestButton(setting.controlEl, ta, false, this.modal, () => editor.getValue());
+        }
+    }
+
+    private buildActionInputs(container: HTMLElement): void {
+      container.innerHTML = '';
+      buildActionInputs(
+            this,
+            container,
+            this.buttonConfig,
+            (newConfig) => {
+                this.buttonConfig = { ...this.buttonConfig, ...(newConfig as any) };
+            },
+            this.detectedFields,
+            this.dataSource,
+            this.contentEl.querySelector('.button-text-section') as HTMLElement,
+            (editor) => { this.customActionField = editor; }
+        );
+    }
+
+    private handleTextTypeChange(type: 'text' | 'property' | 'dynamic'): void {
+        switch (type) {
+            case 'text':
+                this.buttonConfig.text = 'New Button';
+                break;
+            case 'property':
+                this.buttonConfig.text = `property:${this.detectedFields[0] || ''}`;
+                break;
+            case 'dynamic':
+                this.buttonConfig.text = () => '';
+                break;
+        }
+        const container = this.contentEl.querySelector('.text-value-container') as HTMLElement;
+        this.buildTextInputs(container);
+    }
+
+
+    private handleSubmit(): void {
+        const actionType = (this.contentEl.querySelector('.action-container .setting-item:first-child select') as HTMLSelectElement)?.value;
+        
+        if (actionType === 'item.path') {
+            this.buttonConfig.action = 'item.path';
+            this.buttonConfig.menuOptions = undefined;
+        } else if (actionType === 'js') {
+            const jsCode = this.customActionField.getValue();
+            if (!jsCode || jsCode.trim() === '') {
+                new Notice('Custom JavaScript for action cannot be empty.');
+                return;
+            }
+            this.buttonConfig.action = stringToFunction(jsCode) as any;
+            this.buttonConfig.menuOptions = undefined;
+        } else if (actionType === 'edit-property') {
+             this.buttonConfig.action = 'edit-property';
+             this.buttonConfig.menuOptions = undefined;
+        } else if (actionType !== 'menu') {
+            this.buttonConfig.menuOptions = undefined;
+        }
+
+        if (actionType === 'menu') {
+            if (!this.buttonConfig.menuOptions || this.buttonConfig.menuOptions.length === 0) {
+                new Notice('Please add at least one menu option.');
+                return;
+            }
+            for (const option of this.buttonConfig.menuOptions) {
+                if (!option.name || option.name.trim() === '') {
+                    new Notice('Menu option name cannot be empty.');
+                    return;
+                }
+                if (!option.action || (typeof option.action === 'string' && option.action.trim() === '')) {
+                    new Notice('Menu option action cannot be empty.');
+                    return;
+                }
+            }
+        }
+
+        const textInput = this.contentEl.querySelector('.static-text-input input') as HTMLInputElement;
+        if (textInput && this.getTextType() === 'text') {
+            this.buttonConfig.text = textInput.value;
+        }
+
+        if (this.getTextType() === 'dynamic') {
+            const jsCode = this.customTextField.getValue();
+            if (!jsCode || jsCode.trim() === '') {
+                new Notice('Custom JavaScript for text cannot be empty.');
+                return;
+            }
+        } else if (actionType !== 'menu' && !this.buttonConfig.text && !this.buttonConfig.checkboxMode) {
+            new Notice('Button text cannot be empty.');
+            return;
+        }
+
+        if (actionType !== 'menu' && typeof this.buttonConfig.action === 'string' && this.buttonConfig.action.trim() === '') {
+            new Notice('Action cannot be empty.');
+            return;
+        }
+
+        if (typeof this.buttonConfig.action === 'function') {
+            this.buttonConfig = { ...this.buttonConfig, action: this.buttonConfig.action };
+        }
+        
+        this.onSubmit(this.buttonConfig);
+        this.close();
+    }
+
+    onClose(): void {
+        this.contentEl.empty();
+    }
+}

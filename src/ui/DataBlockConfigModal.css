@@ -1,0 +1,1052 @@
+.modal:has(.datablock-config-modal) {
+    width: fit-content !important;
+    padding: 0 !important
+
+}.modal-header {
+    padding: 16px 16px 0 16px;
+}
+
+/* --- 1. Base Modal Enhancements --- */
+.datablock-config-modal {
+    max-width: 1200px !important;
+    width: 95vw !important;
+    height: 75vh !important;
+    /* max-height: 100% !important; 
+    height: auto !important; */
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.datablock-config-modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* --- 2. Progress Indicator --- */
+.datablock-progress {
+    padding: var(--size-4-3);
+    border-bottom: 1px solid var(--background-modifier-border);
+    background: var(--background-secondary);
+}
+
+.datablock-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--background-modifier-border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: var(--size-4-2);
+}
+
+.datablock-progress-fill {
+    height: 100%;
+    background: var(--interactive-accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.datablock-progress-text {
+    font-size: var(--font-ui-small);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* --- 3. Tab Navigation --- */
+.datablock-tabs-container {
+    flex-shrink: 0;
+}
+
+.datablock-tab-nav {
+    display: flex;
+    background: var(--background-secondary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    /* padding: 0 11px; */
+    justify-content: space-between;
+}
+
+.datablock-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    padding: var(--size-4-3) var(--size-4-4);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.datablock-tab:hover {
+    background: var(--background-modifier-hover);
+}
+
+.datablock-tab.active {
+    background: var(--background-primary);
+    border-bottom-color: var(--interactive-accent);
+    color: var(--text-normal);
+}
+
+.datablock-tab-icon {
+    font-size: 1.2em;
+    display: flex;
+}
+
+.datablock-tab-label {
+    font-weight: var(--font-medium);
+    font-size: var(--font-ui-small);
+}
+
+.datablock-main-tabs {
+    display: flex;
+}
+
+.datablock-tab-donate {
+    border-bottom-color: transparent;
+    color: var(--text-muted);
+}
+
+.datablock-tab.datablock-tab-donate {
+    min-width: 5em;
+    color: var(--text-muted);
+}
+
+.datablock-tab-donate:hover {
+    color: var(--interactive-accent-hover);
+}
+
+.datablock-tab-donate.active {
+    border-bottom-color: var(--interactive-accent) !important;
+    color: var(--interactive-accent) !important;
+}
+
+/* --- 4. Tab Content --- */
+.datablock-content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--size-4-4);
+}
+
+.datablock-tab-content {
+    display: none;
+    margin: 32px 0;
+    animation: fadeIn 0.2s ease;
+}
+
+.datablock-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 5. Section and Card Layouts --- */
+.datablock-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.datablock-section-header {
+    margin-bottom: var(--size-4-6);
+    text-align: center;
+}
+
+.datablock-section-header h3 {
+    margin: 0 0 var(--size-4-2) 0;
+    color: var(--text-normal);
+    font-size: var(--font-ui-large);
+}
+
+.datablock-section-description {
+    color: var(--text-muted);
+    font-size: var(--font-ui-medium);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.datablock-card {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-l);
+    padding: var(--size-4-6);
+    margin-bottom: var(--size-4-6);
+    box-shadow: var(--shadow-s);
+    transition: all 0.2s ease;
+}
+/* 
+.datablock-card:hover {
+    border-color: var(--background-modifier-border-hover);
+    box-shadow: var(--shadow-m);
+} */
+
+.datablock-card h4 {
+    margin: 0 0 var(--size-4-4) 0;
+    color: var(--text-normal);
+    font-size: var(--font-ui-medium);
+    font-weight: var(--font-semibold);
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+}
+
+.datablock-card h4::before {
+    content: "▶";
+    color: var(--interactive-accent);
+    font-size: 0.8em;
+}
+
+/* --- 6. View Type Selector --- */
+.datablock-view-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--size-4-4);
+    margin-top: 18px;
+}
+
+.datablock-view-option {
+    background: var(--background-secondary);
+    border: 2px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    padding: 21px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    align-content: center;
+}
+
+.datablock-view-option:hover {
+    border-color: var(--interactive-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-m);
+}
+
+.datablock-view-option.selected {
+    border-color: var(--interactive-accent);
+    background: var(--interactive-accent);
+    color: white;
+}
+
+
+.datablock-view-option .datablock-view-icon {
+    --icon-size: 25px;
+    font-size: 2em;
+    display: inline-flex;
+    margin-bottom: 10px;
+
+}
+
+.datablock-view-content strong {
+    display: block;
+    margin-bottom: var(--size-4-1);
+    font-size: var(--font-ui-medium);
+}
+
+.datablock-view-content p {
+    margin: 0;
+    font-size: var(--font-ui-small);
+    opacity: 0.8;
+}
+
+.datablock-view-option.selected .datablock-view-content p {
+    opacity: 1;
+}
+
+.datablock-view-settings {
+    margin-top: var(--size-4-4);
+    padding-top: var(--size-4-4);
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* --- 7. Config Components --- */
+.datablock-sort-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-4-2);
+    margin-bottom: var(--size-4-4);
+    padding: var(--size-4-3);
+    background: var(--background-secondary);
+    border-radius: var(--radius-s);
+    align-items: center;
+}
+
+.datablock-label {
+    font-size: var(--font-ui-small);
+    color: var(--text-muted);
+    font-weight: var(--font-medium);
+}
+
+.datablock-sort-presets button {
+    font-size: var(--font-ui-small) !important;
+    padding: var(--size-4-1) var(--size-4-3) !important;
+}
+
+.datablock-custom-sort {
+    margin-top: var(--size-4-4);
+    padding-top: var(--size-4-4);
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+/* --- 8. Config Lists and Items --- */
+.datablock-config-pill-list,
+.datablock-config-button-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4-3);
+    margin-bottom: var(--size-4-4);
+}
+
+.datablock-pill-item,
+.datablock-button-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--size-4-3);
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    transition: all 0.2s ease;
+}
+
+.datablock-pill-item:hover,
+.datablock-button-item:hover {
+    /* border-color: var(--interactive-accent);
+    box-shadow: var(--shadow-s); */
+}
+
+.datablock-pill-preview,
+.datablock-button-preview {
+    flex: 1;
+}
+
+.pill-sample {
+    display: inline-block;
+    background: var(--tag-background);
+    color: var(--tag-color);
+    padding: var(--size-4-1) var(--size-4-2);
+    border-radius: var(--tag-radius);
+    font-size: var(--font-ui-smaller);
+}
+
+.datablock-sample-button {
+    background: var(--interactive-normal) !important;
+    color:  var(--text-color) !important;
+    border: none !important;
+    padding: var(--size-4-2) var(--size-4-3) !important;
+    border-radius: var(--button-radius) !important;
+    font-size: var(--font-ui-small) !important;
+    cursor: default !important;
+}
+
+.datablock-pill-actions,
+.datablock-button-actions {
+    display: flex;
+    gap: var(--size-4-1);
+}
+
+/* --- 9. Config Filters --- */
+.datablock-config-filters {
+    margin-top: var(--size-4-4);
+    /* padding-top: 7px;
+    border-top: 1px solid var(--background-modifier-border); */
+
+}
+
+.datablock-config-filter-group {
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    padding: var(--size-4-4);
+    /* margin-bottom: var(--size-4-3); */
+}
+
+.datablock-filter-group-root {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.datablock-filter-group-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--size-4-3);
+    gap: var(--size-4-2);
+}
+
+.datablock-filter-conditions {
+    margin-left: var(--size-4-4);
+    padding-left: var(--size-4-4);
+}
+
+.datablock-config-filter-condition {
+    margin-bottom: var(--size-4-3);
+}
+
+.datablock-condition-card {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    padding: var(--size-4-3);
+    position: relative;
+}
+
+.datablock-filter-group-footer {
+    display: flex;
+    gap: var(--size-4-2);
+    margin-top: var(--size-4-3);
+    flex-wrap: wrap;
+}
+
+.datablock-filter-group-footer button {
+    font-size: var(--font-ui-small) !important;
+}
+
+/* --- 10. Preview Panel --- */
+.datablock-preview-section {
+    border-top: 1px solid var(--background-modifier-border);
+    background: var(--background-secondary);
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 60px; /* Height of the footer */
+    z-index: 1;
+}
+
+.datablock-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--size-4-3) var(--size-4-4);
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.datablock-preview-header h3 {
+    margin: 0;
+    font-size: var(--font-ui-medium);
+    font-weight: var(--font-medium);
+}
+
+.datablock-preview-container {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: var(--size-4-4);
+    transition: all 0.3s ease;
+}
+
+.datablock-preview-container.collapsed {
+    max-height: 0;
+    padding: 0 var(--size-4-4);
+    overflow: hidden;
+}
+
+.datablock-preview-container pre {
+    background: var(--code-background);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    padding: var(--size-4-3);
+    margin: 0;
+    font-size: var(--font-ui-smaller);
+    line-height: 1.4;
+    user-select: text;
+}
+
+.datablock-preview-container code {
+    color: var(--code-normal);
+}
+
+/* --- 11. Footer --- */
+.datablock-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--size-4-4);
+    border-top: 1px solid var(--background-modifier-border);
+    background: var(--background-secondary);
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    height: 60px;
+}
+
+.datablock-footer-left,
+.datablock-footer-right {
+    display: flex;
+    gap: var(--size-4-2);
+}
+
+/* --- 12. Field Summary --- */
+.datablock-fields-summary {
+    margin-top: var(--size-4-2);
+    padding: var(--size-4-2);
+    background: var(--background-secondary);
+    border-radius: var(--radius-s);
+    border: 1px solid var(--background-modifier-border);
+}
+
+.datablock-fields-summary small {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+}
+
+/* --- 13. Advanced Field Controls --- */
+.datablock-advanced-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4-2);
+}
+
+.datablock-secondary-control {
+    margin-top: var(--size-4-2);
+}
+
+.datablock-secondary-control textarea,
+.custom-js-container {
+    border-left: none;
+}
+.custom-js-container textarea {
+    min-height: 80px !important;
+    min-width: 300px !important;
+    width: 100% !important;
+    resize: both !important;
+}
+
+/* --- 14. Pagination Settings --- */
+.datablock-pagination-settings {
+    margin-top: var(--size-4-4);
+    padding-top: var(--size-4-4);
+    border-top: 1px solid var(--background-modifier-border);
+    background: var(--background-secondary);
+    border-radius: var(--radius-s);
+    padding: var(--size-4-3);
+}
+/* --- 15. Responsive Design --- */
+@media (max-width: 1400px) {
+    .datablock-config-modal {
+        max-width: 950px !important;
+        width: 85vw !important;
+    }
+}
+
+
+
+
+/* --- 15. Responsive Design --- */
+@media (max-width: 768px) {
+    .datablock-config-modal {
+        width: 98vw !important;
+        max-width: none !important;
+        height: 95vh !important;
+        max-height: none !important;
+    }
+
+    .datablock-tab-nav {
+        flex-wrap: wrap;
+    }
+
+    .datablock-tab {
+        min-width: auto;
+        flex: 1;
+        font-size: var(--font-ui-smaller);
+    }
+
+    .datablock-view-options {
+        grid-template-columns: 1fr;
+    }
+
+    .datablock-sort-presets {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .datablock-footer {
+        flex-direction: column;
+        gap: var(--size-4-3);
+    }
+
+    .datablock-footer-left,
+    .datablock-footer-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .datablock-pill-item,
+    .datablock-button-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--size-4-2);
+    }
+
+    .datablock-pill-actions,
+    .datablock-button-actions {
+        align-self: flex-end;
+    }
+}
+
+/* --- 16. Animation and Transitions --- */
+.datablock-card,
+.datablock-view-option,
+.datablock-pill-item,
+.datablock-button-item {
+    transform: translateZ(0); /* Enable hardware acceleration */
+}
+
+.datablock-config-modal .setting-item {
+    transition: background-color 0.2s ease;
+}
+
+.datablock-config-modal .setting-item:hover {
+    /* background-color: var(--background-modifier-hover); */
+}
+
+/* --- 17. Dark/Light Theme Adjustments --- */
+.theme-dark .datablock-view-option {
+    background: var(--input-background);
+}
+
+.theme-light .datablock-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* .theme-light .datablock-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+} */
+
+/* --- 18. Accessibility Improvements --- */
+.datablock-tab:focus,
+.datablock-view-option:focus {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+}
+
+
+/* --- 19. Loading States --- */
+.datablock-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.datablock-loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--background-modifier-border);
+    border-top: 2px solid var(--interactive-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- 20. Error States --- */
+.datablock-error {
+    border-color: var(--text-error) !important;
+    background-color: rgba(var(--color-red-rgb), 0.1) !important;
+}
+
+.datablock-error-message {
+    color: var(--text-error);
+    font-size: var(--font-ui-smaller);
+    margin-top: var(--size-4-1);
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-1);
+}
+
+.datablock-error-message::before {
+    content: "⚠";
+}
+
+/* --- 21. Add Item Modal Styles --- */
+.datablock-add-item-modal .custom-action-input .setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.datablock-add-item-modal .custom-action-input .setting-item .setting-item-info {
+    width: 100%;
+}
+
+.datablock-add-item-modal .custom-action-input .setting-item .setting-item-control {
+    width: 100%;
+}
+
+.datablock-add-item-modal input[type="text"] {
+    height: 36px
+}
+.modal:has(.datablock-add-item-modal) {
+    width: 525px !important;
+    height: auto !important;
+}
+
+.datablock-add-item-modal textarea {
+    width: 100%;
+    height: 120px;
+    resize: vertical;
+    font-family: var(--font-monospace);
+    color: var(--text-normal);
+    line-height: 1.5;
+}
+.datablock-section-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--background-modifier-border);
+    margin: var(--size-4-6) 0;
+}
+.datablock-add-item-modal .setting-item {
+    border-top: none;
+}
+
+.datablock-config-modal .config-field-card .action-configuration {
+    border-radius: 5px;
+    padding: 1.5em;
+    /* background: #0e0e0e; */
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+
+    margin-top: 20px;
+}
+
+
+.config-field-card {
+    margin-bottom: 0;
+}
+
+
+.datablock-config-modal .config-field-card .action-fields {
+    padding-left: 18px;
+    margin: 1em 0.5em 0;
+}
+
+.datablock-config-modal .config-field-card .setting-item {
+    padding: 0;
+}
+
+.datablock-config-modal .config-field-card .setting-item-control input[type="text"] {
+    margin: 0;
+}
+
+.datablock-config-modal .config-field-card .advanced-field-selector {
+    gap: 12px;
+}
+
+.datablock-config-modal .config-field-card .setting-item-control .dropdown {
+    margin: 0 !important;
+}
+
+.datablock-config-modal .config-field-card .description-fields {
+    margin-top: 20px;
+}
+.datablock-config-modal .config-field-card .description-fields:empty {
+    margin: 0;
+}
+
+
+
+
+.datablock-add-item-modal input[type=text], .datablock-config-modal input[type=text] {
+    height: 36px;
+    margin: 0;
+    width: 100%;
+}
+
+.datablock-add-item-modal select.dropdown {
+    margin: 0;
+
+}
+.datablock-add-item-modal {
+    padding: 10px 16px !important;
+}
+
+.datablock-add-item-modal .action-container, .datablock-add-item-modal .action-value-container {
+    margin-top: 1em;
+}
+
+.datablock-add-item-modal .action-container .setting-item{
+    padding: 0px 0px 7px 0px;
+}
+
+
+
+
+.datablock-add-item-modal .action-container .setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.datablock-add-item-modal .action-container .setting-item-control{
+    width: 100%;
+}
+
+
+.datablock-add-item-modal .action-container .setting-item, .datablock-add-item-modal .custom-input .setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.datablock-add-item-modal .action-container .setting-item-control, .datablock-add-item-modal .custom-input .setting-item-control{
+    width: 100%;
+}
+
+
+.datablock-add-item-modal select{
+    max-width: 100%;
+}
+
+.view-specific-settings-container .setting-item:first-of-type{
+    border: none;
+    padding-top: 0 !important;
+}
+
+
+.datablock-config-modal .dropdown{
+    margin: 0;
+}
+.datablock-filter-item {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    margin-bottom: var(--size-4-2);
+}
+
+.datablock-filter-item-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    flex-grow: 1;
+    width: 100%;
+}
+
+.datablock-filter-item:has(.datablock-custom-js-row) {
+    flex-direction: column;
+}
+.datablock-filter-item:has(.datablock-custom-js-row) .datablock-filter-item-controls {
+    justify-content: space-between;
+}
+.datablock-filter-item-controls input[type="text"] {
+    height: var(--input-height);
+}
+
+.datablock-custom-js-row textarea{
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 5px;
+
+}
+
+.datablock-filter-item .button-component {
+    flex-shrink: 0;
+}
+
+.datablock-filter-conjunction {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 20px;
+    margin-bottom: var(--size-4-2);
+}
+
+.datablock-filter-conjunction .setting-item {
+    padding: 0;
+    border: none;
+}
+
+.datablock-add-filter-btn-container {
+    margin-top: var(--size-4-2);
+}
+
+.datablock-add-filter-btn-container .button-component {
+    background-color: transparent;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.datablock-add-filter-btn-container .button-component:hover {
+    background-color: var(--background-modifier-hover);
+    border-color: var(--interactive-accent);
+}
+.datablock-filter-item-custom-js {
+    width: 100%;
+    margin-top: var(--size-4-2);
+}
+.datablock-filter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.datablock-filter-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: var(--size-4-2);
+}
+
+.datablock-custom-js-row {
+    margin-top: var(--size-4-2);
+}
+
+.datablock-custom-js-row textarea {
+    flex-grow: 1;
+}
+.datablock-config-modal .datablock-test-button {
+    gap: 5px;
+    /* gap: var(--size-4-1); */
+    margin: 5.5px 0 0 0;
+}
+
+.datablock-tab-donate .lucide-heart {
+    fill: currentColor;
+    --icon-size: 18px;
+}
+
+.grouping-controls{
+    width: 100%;
+}
+.datablock-add-item-modal .action-container .setting-item, .datablock-add-item-modal .custom-input .setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}.action-container .setting-item-control, .custom-input .setting-item-control  {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.action-container .setting-item-control button, .custom-input .setting-item-control button {
+    width: 100%;
+    gap: 4px
+}
+
+.options-container {
+    margin-top: 16px;
+}
+
+.pill-property-to-edit-container {
+    margin-bottom: 16px;
+}
+
+.source-inputs .setting-item:has(.editor-container) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.source-inputs  .setting-item:has(.editor-container) .setting-item-control {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.editor-container {
+    width: 100%;
+}
+
+.source-inputs  .setting-item:has(.editor-container) .setting-item-info {
+    width: 100%;
+    margin: 0;
+}
+
+.source-inputs .setting-item:has(.editor-container) button.datablock-test-button {
+    width: 100%;
+}
+
+.source-inputs:has(textarea) .setting-item textarea {
+    width: 100%;
+    min-height: 132px;
+    resize: vertical;
+}
+
+.source-inputs {
+    margin-top: 4px;
+}
+
+.datablock-config-modal textarea:not(.grouping-controls textarea) {
+    font-family: var(--font-monospace);
+    color: var(--text-normal);
+    line-height: 1.5;
+  }
+
+  .grouping-controls textarea{
+    min-height: 100px;
+    resize: vertical;
+
+  }
+.datablock-menu-item {
+    margin-top: 15px;
+}.menu.datablock .menu-item-icon:empty {
+    display: none;
+}
+.datablock-config-menu-list textarea {
+    min-height: 134px
+}
+
+
+
+
+.cm-editor-expanded-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    padding: 5% 9%;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 1000000000000000000000000;
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.cm-editor-expanded-wrapper.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.cm-editor-expanded-wrapper .cm-editor {
+    font-size: 15px;
+    height: 100%;
+}
+
+.cm-editor-expanded-wrapper button.cm-expand-button {
+    top: var(--size-2-2);
+    opacity: 0.65;
+}
+
+.cm-editor-overlay {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.cm-editor-overlay.visible {
+    opacity: 1;
+}
+.advanced-field-selector .cm-content{
+    min-width: 325px;
+    max-width: 360px;
+}
+
+.action-configuration .advanced-field-selector .cm-content{
+    max-width: 100%;
+}.datablock-add-item-modal .cm-editor{
+    max-height: 200px;
+}

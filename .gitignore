@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+main.js
+
+# Local Obsidian folder
+.obsidian/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# ignore local build config
+local.config.json

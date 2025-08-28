@@ -1,0 +1,94 @@
+.gallery-view {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+    width: 100%;
+  }
+
+  .obsidian-view.gallery-view.gallery-cols-3 {
+    margin-top: 1.5em;
+  }
+  .gallery-cols-1 { grid-template-columns: repeat(1, 1fr) !important; }
+  .gallery-cols-2 { grid-template-columns: repeat(2, 1fr) !important; }
+  .gallery-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+  .gallery-cols-4 { grid-template-columns: repeat(4, 1fr) !important; }
+  .gallery-cols-5 { grid-template-columns: repeat(5, 1fr) !important; }
+  .gallery-cols-6 { grid-template-columns: repeat(6, 1fr) !important; }
+
+  .gallery-view .item {
+    background-color: var(--background-primary);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .gallery-view .item {
+    height: 100%;
+    overflow: hidden;
+  }
+  .cover-container {
+    width: 100%;
+    position: relative;
+  }
+  .cover-image {
+    width: 100%;
+    height: 130px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .theme-dark .cover-image {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  .theme-light .cover-image {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+  .cover-image:hover {
+    filter: brightness(1.05);
+  }
+  .cover-image.cover-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-faint);
+  }
+  .item-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    padding: 10px 12px 12px 12px;
+  }
+  .content-spacer {
+    flex-grow: 1;
+    min-height: 10px;
+  }
+
+
+  .gallery-view .item-info-container > .action-button {
+    margin-top: auto;
+    padding: 7px 12px;
+    font-size: 0.85em;
+    color: var(--text-muted) !important;
+  }
+
+  .gallery-view .metadata-menu-fields.metadata-menu-stable-container.metadata-menu-gallery-view {
+    width: auto;
+  }
+
+  .gallery-view .item .item-info-container{
+    background-color: var(--color-base-25);
+    border-radius: 7px
+}
+.gallery-view .item:has(.cover-container) .item-info-container {
+    border-radius: 0 0 7px 7px
+}
+
+
+.gallery-view .pills-buttons-wrapper{
+  margin-bottom: 0;
+}.gallery-view .action-button {
+  width: 100%;
+}
