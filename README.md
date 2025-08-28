@@ -299,8 +299,8 @@ pills:
 
 ### Template Syntax
 Use double curly braces for dynamic content:
-- `{{property:fieldName}}` - Display any frontmatter property
-- `{{icon:iconName}}` - Insert Lucide icons
+- `{{property:fieldName}}` - Display frontmatter property value
+- `{{icon:iconName}}` - Display Lucide icon
 ---
 
 ## 🛠️ Capabilities
