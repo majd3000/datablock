@@ -310,12 +310,6 @@
     transition: all 0.2s ease;
 }
 
-.datablock-pill-item:hover,
-.datablock-button-item:hover {
-    /* border-color: var(--interactive-accent);
-    box-shadow: var(--shadow-s); */
-}
-
 .datablock-pill-preview,
 .datablock-button-preview {
     flex: 1;

@@ -777,7 +777,11 @@ return data;`
         const configToDump: any = cleanConfig;
 
 
-        if (!configToDump.pagination) {
+        if (configToDump.pagination) {
+            if (configToDump.limit === undefined) {
+                configToDump.limit = this.config.limit ?? 12;
+            }
+        } else {
             delete configToDump.pagination;
             delete configToDump.limit;
         }
@@ -810,7 +814,7 @@ return data;`
             delete configToDump.customGroups;
         }
 
-        const keyOrder = [ 'view', 'folder', 'data', 'title', 'description', 'pills', 'buttons', 'filters', 'sort', 'limit', 'pagination', 'columns', 'coverProperty', 'search', 'class', 'inlineButtons', 'newTab', 'groupByProperty', 'customGroups' ];
+        const keyOrder = [ 'view', 'folder', 'data', 'title', 'description', 'pills', 'buttons', 'filters', 'sort', 'pagination', 'limit', 'columns', 'coverProperty', 'search', 'class', 'inlineButtons', 'newTab', 'groupByProperty', 'customGroups' ];
         const orderedConfig: Partial<DataBlockConfig> = {};
         keyOrder.forEach(key => {
             if (configToDump.hasOwnProperty(key)) {

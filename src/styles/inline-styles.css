@@ -1,0 +1,46 @@
+.hidden {
+    display: none !important;
+}
+
+.board-column-collapse-icon.is-collapsed {
+    transform: rotate(-90deg);
+}
+
+.cm-relative {
+    position: relative;
+}
+
+.cm-ltr {
+    direction: ltr;
+}
+
+.cm-text-align-left {
+    text-align: left;
+}
+
+.cm-no-scroll {
+    overflow: hidden;
+}
+
+.cm-editor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9999999999;
+}
+
+.datablock-text-area {
+    width: 100%;
+    height: 100px;
+}
+
+.no-decoration {
+    text-decoration: none;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
