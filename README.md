@@ -86,7 +86,7 @@ Kanban-style boards for project management and workflow visualization
 
 ### 📝 Tasks
 
-Create a task list to organize tasks with due dates and priorities, while hiding completed ones.
+Display your tasks as a list view with due dates and priorities, hiding completed ones.
 
 ````markdown
 ```datablock
@@ -145,7 +145,7 @@ priority: High
 
 ### 🍳 Recipes
 
-Display your favorite recipes in a gallery view with cooking times, and difficulty ratings.
+Display your recipes as a gallery view with cooking times and difficulty ratings.
 
 ````markdown
 ```datablock
@@ -184,7 +184,7 @@ difficulty: "Medium"
 
 ### 📊 Projects
 
-Organize projects in a Kanban board with status columns and priority levels
+Display your projects as a kanban board with To Do, In Progress, and Done columns.
 
 ````markdown
 ```datablock
