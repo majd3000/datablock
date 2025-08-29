@@ -1,3 +1,4 @@
+import { setIcon } from 'obsidian';
 import { App, TFile } from 'obsidian';
 import { JavaScriptExecutor } from 'src/javascript-executor';
 import { DataBlockConfig } from 'src/types';
@@ -82,7 +83,7 @@ export class BoardRenderer extends BaseRenderer {
 
             const columnHeader = columnEl.createDiv({ cls: 'board-column-header' });
             const collapseIcon = columnHeader.createSpan({ cls: 'board-column-collapse-icon' });
-            collapseIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>`;
+            setIcon(collapseIcon, "chevron-down");
             
             columnHeader.createEl('h3', { text: group, cls: 'board-column-title' });
             columnHeader.createSpan({ cls: 'board-column-item-count', text: `(${items.length})` });
@@ -90,7 +91,7 @@ export class BoardRenderer extends BaseRenderer {
             const columnContent = columnEl.createDiv({ cls: 'board-column-content' });
             collapseIcon.addEventListener('click', () => {
                 const isCollapsed = columnEl.classList.toggle('collapsed');
-                collapseIcon.style.transform = isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+                collapseIcon.toggleClass('is-collapsed', isCollapsed);
             });
 
             for (const item of items) {

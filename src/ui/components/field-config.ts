@@ -75,9 +75,9 @@ function buildAdvancedFieldSelector(
     }
     typeDropdown.addOption('custom', isAction ? 'Execute JavaScript' : 'Custom JavaScript');
 
-    const fileContainer = selectorContainer.createDiv({ cls: 'file-path-container', attr: { style: 'display: none;' } });
-    const frontmatterContainer = selectorContainer.createDiv({ cls: 'property-key-container', attr: { style: 'display: none;' } });
-    const customContainer = selectorContainer.createDiv({ cls: 'custom-js-container', attr: { style: 'display: none;' } });
+    const fileContainer = selectorContainer.createDiv({ cls: 'file-path-container hidden' });
+    const frontmatterContainer = selectorContainer.createDiv({ cls: 'property-key-container hidden' });
+    const customContainer = selectorContainer.createDiv({ cls: 'custom-js-container hidden' });
 
     const filePathInput = new TextComponent(fileContainer).setPlaceholder('Enter note path, e.g. Folder/Note.md');
 
@@ -87,7 +87,7 @@ function buildAdvancedFieldSelector(
     let editor: JSTextarea;
     const editorContainer = customContainer.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
     const customTextarea = new TextAreaComponent(editorContainer).setPlaceholder(isAction ? 'console.log("Clicked:", item);' : "return item.name;");
-    customTextarea.inputEl.style.display = 'none';
+    customTextarea.inputEl.toggleClass('hidden', true);
 
     editor = new JSTextarea(editorContainer, {
         initialValue: '',
@@ -129,16 +129,16 @@ function buildAdvancedFieldSelector(
     };
 
     const toggleContainers = (type: string) => {
-        fileContainer.style.display = 'none';
-        frontmatterContainer.style.display = type === 'property' ? 'block' : 'none';
-        customContainer.style.display = type === 'custom' ? 'block' : 'none';
+        fileContainer.toggleClass('hidden', true);
+        frontmatterContainer.toggleClass('hidden', type !== 'property');
+        customContainer.toggleClass('hidden', type !== 'custom');
         updateConfig();
     };
 
     const justToggleContainers = (type: string) => {
-        fileContainer.style.display = 'none';
-        frontmatterContainer.style.display = type === 'property' ? 'block' : 'none';
-        customContainer.style.display = type === 'custom' ? 'block' : 'none';
+        fileContainer.toggleClass('hidden', true);
+        frontmatterContainer.toggleClass('hidden', type !== 'property');
+        customContainer.toggleClass('hidden', type !== 'custom');
     };
 
     createTestButton(customContainer, customTextarea, isAction, modal, () => editor.getValue());
@@ -281,11 +281,9 @@ export function buildAdvancedFieldWithAction(
                 });
         });
 
+        actionFieldsContainer.toggleClass('hidden', !hasAction);
         if (hasAction) {
-            actionFieldsContainer.style.display = 'block';
             buildAdvancedFieldSelector(modal, actionFieldsContainer, config.fieldKey, config.defaultAction || 'item.path', true);
-        } else {
-            actionFieldsContainer.style.display = 'none';
         }
     };
 

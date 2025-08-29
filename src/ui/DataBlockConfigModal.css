@@ -1050,3 +1050,19 @@
 }.datablock-add-item-modal .cm-editor{
     max-height: 200px;
 }
+.datablock-config-modal .hidden {
+    display: none !important;
+}
+
+.datablock-config-modal .datablock-text-area {
+    width: 100%;
+    height: 100px;
+}
+
+.datablock-config-modal .no-decoration {
+    text-decoration: none;
+}
+
+.datablock-config-modal .text-muted {
+    color: var(--text-muted);
+}

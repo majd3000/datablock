@@ -33,6 +33,7 @@ export class AddPillModal extends Modal {
     onOpen(): void {
         this.contentEl.empty();
         this.titleEl.setText('Add New Pill');
+        this.contentEl.addClass('datablock');
         this.contentEl.addClass('datablock-add-item-modal');
 
         // Initialize with a default field
@@ -68,14 +69,14 @@ export class AddPillModal extends Modal {
                     .setValue(!!this.pillConfig.action)
                     .onChange(enabled => {
                         const actionContainer = actionSection.querySelector('.action-container') as HTMLElement;
-                        if (actionContainer) actionContainer.style.display = enabled ? 'block' : 'none';
+                        if (actionContainer) actionContainer.toggleClass('hidden', !enabled);
                         
                         this.updatePropertyToEditVisibility();
                     });
             });
 
         const actionContainer = actionSection.createDiv({ cls: 'action-container' });
-        actionContainer.style.display = this.pillConfig.action ? 'block' : 'none';
+        actionContainer.toggleClass('hidden', !this.pillConfig.action);
         this.buildActionInputs(actionContainer);
 
         // Footer
@@ -96,7 +97,7 @@ export class AddPillModal extends Modal {
 
         // Property dropdown
         const propertyContainer = container.createDiv({ cls: 'property-input' });
-        propertyContainer.style.display = fieldType === 'property' ? 'block' : 'none';
+        propertyContainer.toggleClass('hidden', fieldType !== 'property');
         new Setting(propertyContainer)
             .setName('Select Property')
             .addDropdown(dropdown => {
@@ -114,7 +115,7 @@ export class AddPillModal extends Modal {
 
         // Text input
         const textContainer = container.createDiv({ cls: 'text-input' });
-        textContainer.style.display = fieldType === 'text' ? 'block' : 'none';
+        textContainer.toggleClass('hidden', fieldType !== 'text');
         new Setting(textContainer)
             .setName('Pill Text')
             .addText(text => {
@@ -126,7 +127,7 @@ export class AddPillModal extends Modal {
 
         // Custom JS textarea
         const customContainer = container.createDiv({ cls: 'custom-input' });
-        customContainer.style.display = fieldType === 'custom' ? 'block' : 'none';
+        customContainer.toggleClass('hidden', fieldType !== 'custom');
         
         const setting = new Setting(customContainer)
             .setName('JavaScript Expression')
@@ -135,7 +136,7 @@ export class AddPillModal extends Modal {
         const editorContainer = setting.controlEl.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
         let editor: JSTextarea;
         const ta = new TextAreaComponent(editorContainer);
-        ta.inputEl.style.display = 'none';
+        ta.inputEl.toggleClass('hidden', true);
 
         this.customTextField = new JSTextarea(editorContainer, {
             initialValue: fieldType === 'custom' ? functionToCodeBlock(this.pillConfig.text) : '',
@@ -168,9 +169,9 @@ export class AddPillModal extends Modal {
         const text = container.querySelector('.text-input') as HTMLElement;
         const custom = container.querySelector('.custom-input') as HTMLElement;
 
-        property.style.display = type === 'property' ? 'block' : 'none';
-        text.style.display = type === 'text' ? 'block' : 'none';
-        custom.style.display = type === 'custom' ? 'block' : 'none';
+        property.toggleClass('hidden', type !== 'property');
+        text.toggleClass('hidden', type !== 'text');
+        custom.toggleClass('hidden', type !== 'custom');
 
         this.updatePropertyToEditVisibility();
 
@@ -271,7 +272,7 @@ export class AddPillModal extends Modal {
         if (propertyToEditContainer) {
             const isActionEnabled = this.actionToggle.getValue();
             const show = isActionEnabled && fieldType === 'custom' && actionType === 'edit-property';
-            propertyToEditContainer.style.display = show ? 'block' : 'none';
+            propertyToEditContainer.toggleClass('hidden', !show);
         }
     }
 

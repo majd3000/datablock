@@ -33,7 +33,9 @@ export class AddButtonModal extends Modal {
     onOpen(): void {
         this.contentEl.empty();
         this.titleEl.setText('Add New Button');
+        this.contentEl.addClass('datablock');
         this.contentEl.addClass('datablock-add-item-modal');
+        this.contentEl.addClass('datablock');
 
         // Initialize with default values
         this.buttonConfig = {
@@ -84,7 +86,7 @@ export class AddButtonModal extends Modal {
     }
 
     private buildTextInputs(container: HTMLElement): void {
-        container.innerHTML = ''; // Clear previous inputs
+        container.empty(); // Clear previous inputs
         const type = this.getTextType();
 
         // Static text input
@@ -132,7 +134,7 @@ export class AddButtonModal extends Modal {
             const editorContainer = setting.controlEl.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
             let editor: JSTextarea;
             const ta = new TextAreaComponent(editorContainer);
-            ta.inputEl.style.display = 'none';
+            ta.inputEl.toggleClass('hidden', true);
 
             this.customTextField = new JSTextarea(editorContainer, {
                 initialValue: functionToCodeBlock(this.buttonConfig.text),
@@ -146,7 +148,7 @@ export class AddButtonModal extends Modal {
     }
 
     private buildActionInputs(container: HTMLElement): void {
-       container.innerHTML = '';
+       container.empty();
        buildActionInputs(
             this,
             container,

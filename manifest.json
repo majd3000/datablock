@@ -1,7 +1,7 @@
 {
 	"id": "datablock",
 	"name": "DataBlock",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Transforms data into customizable views like Kanban board, gallery, and list using code blocks",
 	"author": "majd3000",

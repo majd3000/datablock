@@ -9,7 +9,7 @@ export function buildConfigPillManager(modal: DataBlockConfigModal, container: H
     const pillList = container.createDiv({ cls: 'datablock-config-pill-list' });
     
     const renderPills = () => {
-        pillList.innerHTML = '';
+        pillList.empty();
         (modal.config.pills || []).forEach((pill, index) => {
             const pillItem = pillList.createDiv({ cls: 'datablock-pill-item' });
             
@@ -78,7 +78,7 @@ export function buildConfigButtonManager(modal: DataBlockConfigModal, container:
     const buttonList = container.createDiv({ cls: 'datablock-config-button-list' });
     
     const renderButtons = () => {
-        buttonList.innerHTML = '';
+        buttonList.empty();
         (modal.config.buttons || []).forEach((button, index) => {
             const buttonItem = buttonList.createDiv({ cls: 'datablock-button-item' });
             
@@ -150,7 +150,7 @@ export function buildConfigSortingSettings(modal: DataBlockConfigModal, containe
     const propertyKeySetting = new Setting(sortCard)
         .setName('Property Key')
         .setDesc('Select the property to sort by.');
-    propertyKeySetting.settingEl.style.display = 'none'; // Initially hidden
+    propertyKeySetting.settingEl.toggleClass('hidden', true); // Initially hidden
 
     const propertyKeyDropdown = new DropdownComponent(propertyKeySetting.controlEl);
 
@@ -159,7 +159,7 @@ export function buildConfigSortingSettings(modal: DataBlockConfigModal, containe
 
         const updateSortOptions = () => {
             const currentVal = dropdown.getValue();
-            dropdown.selectEl.innerHTML = '';
+            dropdown.selectEl.empty();
             if (modal.currentDataSource === 'custom') {
                 dropdown.addOption('property', 'Property Value');
                 dropdown.setValue('property');
@@ -209,12 +209,12 @@ export function buildConfigSortingSettings(modal: DataBlockConfigModal, containe
             (sortSetting.components[1] as DropdownComponent).setValue(order);
             
             if (valueToSet === 'property') {
-                propertyKeySetting.settingEl.style.display = ''; // Show
+                propertyKeySetting.settingEl.toggleClass('hidden', false); // Show
                 if (propertyKey) {
                     propertyKeyDropdown.setValue(propertyKey);
                 }
             } else {
-                propertyKeySetting.settingEl.style.display = 'none'; // Hide
+                propertyKeySetting.settingEl.toggleClass('hidden', true); // Hide
             }
         };
 
@@ -238,11 +238,7 @@ export function buildConfigSortingSettings(modal: DataBlockConfigModal, containe
 
         propertyKeyDropdown.onChange(updateSortConfig);
         dropdown.onChange(value => {
-            if (value === 'property') {
-                propertyKeySetting.settingEl.style.display = '';
-            } else {
-                propertyKeySetting.settingEl.style.display = 'none';
-            }
+            propertyKeySetting.settingEl.toggleClass('hidden', value !== 'property');
             updateSortConfig();
         });
         
@@ -268,7 +264,7 @@ export function buildConfigSortingSettings(modal: DataBlockConfigModal, containe
 }
 function buildSimpleFilterManager(modal: DataBlockConfigModal, container: HTMLElement): void {
     const renderFilters = () => {
-        container.innerHTML = '';
+        container.empty();
 
         (modal.config.filters || []).forEach((filter, index) => {
             if (index > 0) {
@@ -521,8 +517,7 @@ export function buildCustomGroupManager(modal: DataBlockConfigModal, container: 
                 modal.config.customGroups.groups = value.split('\n');
                 modal.updatePreview();
               });
-            ta.inputEl.style.width = '100%';
-            ta.inputEl.style.height = '100px';
+            ta.inputEl.addClass('datablock-text-area');
         });
 }
 
@@ -562,7 +557,7 @@ export function buildActionInputs(
         onConfigChange(newConfig);
 
         if (textSection) {
-            textSection.style.display = '';
+            textSection.toggleClass('hidden', false);
         }
 
         config.action = '' as any;
@@ -622,10 +617,10 @@ export function buildActionInputs(
                     newConfig.options = undefined;
                     newConfig.checkboxMode = undefined;
                     if (textSection) {
-                        textSection.style.display = '';
+                        textSection.toggleClass('hidden', false);
                     }
                 } else if (textSection) {
-                    textSection.style.display = '';
+                    textSection.toggleClass('hidden', false);
                 }
 
                 onConfigChange(newConfig);
@@ -640,8 +635,8 @@ export function buildActionInputs(
     const actionValueContainer = container.createDiv({ cls: 'action-value-container' });
 
     const handleActionTypeChange = (type: string, currentConfig: Partial<PillConfig | ButtonConfig>) => {
-        actionValueContainer.innerHTML = '';
-        actionValueContainer.style.display = 'block';
+        actionValueContainer.empty();
+        actionValueContainer.toggleClass('hidden', false);
 
         if (type === 'edit-property') {
             const propertyNameContainer = actionValueContainer.createDiv({ cls: 'property-name-container pill-property-to-edit-container' });
@@ -669,8 +664,8 @@ export function buildActionInputs(
             const handlePropertyTypeChange = (propertyType: string, configForUI: Partial<PillConfig | ButtonConfig>) => {
                 const optionsContainer = actionValueContainer.querySelector('.options-container') as HTMLElement;
                 const checkboxModeContainer = actionValueContainer.querySelector('.checkbox-mode-container') as HTMLElement;
-                if(optionsContainer) optionsContainer.innerHTML = '';
-                if(checkboxModeContainer) checkboxModeContainer.innerHTML = '';
+                if(optionsContainer) optionsContainer.empty();
+                if(checkboxModeContainer) checkboxModeContainer.empty();
 
                 if (propertyType === 'Select' && optionsContainer) {
                     new Setting(optionsContainer)
@@ -696,16 +691,16 @@ export function buildActionInputs(
                                 .onChange(value => {
                                     onConfigChange({ checkboxMode: value, text: value ? '' : 'New Button' });
                                     if (textSection) {
-                                        textSection.style.display = value ? 'none' : '';
+                                        textSection.toggleClass('hidden', value);
                                     }
                                 });
                         });
                 }
 
                 if (propertyType === 'Boolean' && (configForUI as ButtonConfig).checkboxMode && textSection) {
-                    textSection.style.display = 'none';
+                    textSection.toggleClass('hidden', true);
                 } else if (textSection) {
-                    textSection.style.display = '';
+                    textSection.toggleClass('hidden', false);
                 }
             };
 
@@ -734,7 +729,7 @@ export function buildActionInputs(
 
         } else if (type === 'item.path') {
             // No additional inputs needed for this type
-            actionValueContainer.style.display = 'none';
+            actionValueContainer.toggleClass('hidden', true);
         } else if (type === 'js') {
             const setting = new Setting(actionValueContainer)
                 .setName('JavaScript Code')
@@ -743,7 +738,7 @@ export function buildActionInputs(
             const editorContainer = setting.controlEl.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
             let editor: JSTextarea;
             const ta = new TextAreaComponent(editorContainer);
-            ta.inputEl.style.display = 'none';
+            ta.inputEl.toggleClass('hidden', true);
 
             editor = new JSTextarea(editorContainer, {
                 initialValue: functionToCodeBlock(currentConfig.action),
@@ -760,7 +755,7 @@ export function buildActionInputs(
         } else if (type === 'menu') {
             buildMenuOptionsManager(actionValueContainer, currentConfig as ButtonConfig, onConfigChange);
         } else {
-            actionValueContainer.style.display = 'none';
+            actionValueContainer.toggleClass('hidden', true);
         }
     };
 
@@ -778,7 +773,7 @@ function buildMenuOptionsManager(
     const menuList = container.createDiv({ cls: 'datablock-config-menu-list' });
 
     const renderMenuOptions = () => {
-        menuList.innerHTML = '';
+        menuList.empty();
         (config.menuOptions || []).forEach((option, index) => {
             const menuItem = menuList.createDiv({ cls: 'datablock-menu-item' });
 

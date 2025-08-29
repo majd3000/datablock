@@ -29,13 +29,12 @@ export class EditButtonModal extends Modal {
         this.detectedFields = detectedFields;
         this.onSubmit = onSubmit;
         this.modal = modal;
-
-        // Legacy conversion handled in parser
     }
 
     onOpen(): void {
         this.contentEl.empty();
         this.titleEl.setText('Edit Button');
+        this.contentEl.addClass('datablock');
         this.contentEl.addClass('datablock-add-item-modal');
 
         if (this.dataSource === 'custom' && typeof this.buttonConfig.action !== 'function') {
@@ -59,7 +58,6 @@ export class EditButtonModal extends Modal {
         const textValueContainer = textSection.createDiv({ cls: 'text-value-container' });
         this.buildTextInputs(textValueContainer);
 
-        // Action Section
         // Action Section
         const actionSection = this.contentEl.createDiv({ cls: 'button-action-section' });
         const actionContainer = actionSection.createDiv({ cls: 'action-container' });
@@ -85,7 +83,7 @@ export class EditButtonModal extends Modal {
     }
 
     private buildTextInputs(container: HTMLElement): void {
-        container.innerHTML = ''; // Clear previous inputs
+        container.empty(); // Clear previous inputs
         const type = this.getTextType();
 
         // Static text input
@@ -136,7 +134,7 @@ export class EditButtonModal extends Modal {
             const editorContainer = setting.controlEl.createDiv({ cls: 'editor-container', attr: { style: 'width: 100%;' } });
             let editor: JSTextarea;
             const ta = new TextAreaComponent(editorContainer);
-            ta.inputEl.style.display = 'none';
+            ta.inputEl.toggleClass('hidden', true);
 
             this.customTextField = new JSTextarea(editorContainer, {
                 initialValue: functionToCodeBlock(this.buttonConfig.text),
@@ -150,7 +148,7 @@ export class EditButtonModal extends Modal {
     }
 
     private buildActionInputs(container: HTMLElement): void {
-      container.innerHTML = '';
+      container.empty();
       buildActionInputs(
             this,
             container,

@@ -649,3 +649,49 @@ details > summary {
 .custom-fold-marker:hover {
   color: var(--text-normal);
 }
+.datablock .hidden {
+    display: none !important;
+}
+
+.datablock .board-column-collapse-icon.is-collapsed {
+    transform: rotate(-90deg);
+}
+
+.datablock .cm-relative {
+    position: relative;
+}
+
+.datablock .cm-ltr {
+    direction: ltr;
+}
+
+.datablock .cm-text-align-left {
+    text-align: left;
+}
+
+.datablock .cm-no-scroll {
+    overflow: hidden;
+}
+
+.datablock .cm-editor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9999999999;
+}
+
+.datablock .datablock-text-area {
+    width: 100%;
+    height: 100px;
+}
+
+.datablock .no-decoration {
+    text-decoration: none;
+}
+
+.datablock .text-muted {
+    color: var(--text-muted);
+}

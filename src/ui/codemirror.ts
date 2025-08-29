@@ -5,6 +5,7 @@ import { autocompletion, CompletionContext, closeBrackets, closeBracketsKeymap }
 import { history, undo, redo, toggleComment } from "@codemirror/commands";
 import { HighlightStyle, syntaxHighlighting, foldGutter } from "@codemirror/language";
 import { tags as t } from "@lezer/highlight";
+import { setIcon } from "obsidian";
 
 export class JSTextarea {
   private view: EditorView;
@@ -459,16 +460,15 @@ export class JSTextarea {
     this.view.dom.classList.add('obsidian-codemirror');
     
     // Make sure editor container has relative positioning
-    this.view.dom.style.position = 'relative';
+    this.view.dom.classList.add('cm-relative');
 
     // Add expand button
     const expandButton = this.createExpandButton();
     this.view.dom.appendChild(expandButton);
 
     // Ensure direction is set properly
-    this.view.dom.style.direction = 'ltr';
-    this.view.contentDOM.style.direction = 'ltr';
-    this.view.contentDOM.style.textAlign = 'left';
+    this.view.dom.classList.add('cm-ltr');
+    this.view.contentDOM.classList.add('cm-ltr', 'cm-text-align-left');
   }
 
   private setupThemeObserver(): void {
@@ -523,7 +523,7 @@ export class JSTextarea {
           this.overlay.remove();
           this.overlay = null;
         }
-        document.body.style.overflow = '';
+        document.body.classList.remove('cm-no-scroll');
         this.view.dom.classList.remove('cm-expanded');
         
         // Remove escape hint if present
@@ -554,29 +554,11 @@ export class JSTextarea {
     return redo(this.view);
   }
 
-  private getExpandIcon(): string {
-    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8"/>
-      <path d="M3 16.2V21m0 0h4.8M3 21l6-6"/>
-      <path d="M21 7.8V3m0 0h-4.8M21 3l-6 6"/>
-      <path d="M3 7.8V3m0 0h4.8M3 3l6 6"/>
-    </svg>`;
-  }
-
-  private getMinimizeIcon(): string {
-    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M8 3v3a2 2 0 0 1-2 2H3"/>
-      <path d="M21 8h-3a2 2 0 0 1-2-2V3"/>
-      <path d="M3 16h3a2 2 0 0 1 2 2v3"/>
-      <path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
-    </svg>`;
-  }
-
   private createExpandButton(): HTMLElement {
     const button = document.createElement('button');
     button.className = 'cm-expand-button';
     button.setAttribute('aria-label', 'Expand editor');
-    button.innerHTML = this.getExpandIcon();
+    setIcon(button, "maximize");
     
     // Prevent event bubbling to editor
     button.addEventListener('click', (e) => {
@@ -622,13 +604,6 @@ export class JSTextarea {
         // Create and add the overlay
         this.overlay = document.createElement('div');
         this.overlay.className = 'cm-editor-overlay';
-        this.overlay.style.position = 'fixed';
-        this.overlay.style.top = '0';
-        this.overlay.style.left = '0';
-        this.overlay.style.width = '100vw';
-        this.overlay.style.height = '100vh';
-        this.overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
-        this.overlay.style.zIndex = '9999999999'; // Below the editor wrapper
         this.overlay.addEventListener('click', () => this.toggleExpanded());
         
         // Create and add the editor wrapper
@@ -660,9 +635,9 @@ export class JSTextarea {
         });
 
         this.view.contentDOM.addEventListener('mousedown', this.preventCollapseHandler, true);
-        button.innerHTML = this.getMinimizeIcon();
+        setIcon(button, "minimize");
         button.setAttribute('aria-label', 'Minimize editor');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('cm-no-scroll');
   
         requestAnimationFrame(() => {
           this.isTransitioning = false;
@@ -693,9 +668,9 @@ export class JSTextarea {
         }
   
         this.restoreOriginalStyles();
-        button.innerHTML = this.getExpandIcon();
+        setIcon(button, "maximize");
         button.setAttribute('aria-label', 'Expand editor');
-        document.body.style.overflow = '';
+        document.body.classList.remove('cm-no-scroll');
   
         requestAnimationFrame(() => {
           this.isTransitioning = false;

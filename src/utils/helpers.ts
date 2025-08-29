@@ -557,7 +557,7 @@ export function renderPaginationControls(app: App, jsExecutor: JavaScriptExecuto
     if (!controlsDiv) {
         controlsDiv = container.createEl('div', { cls: 'pagination-controls' });
     } else {
-        controlsDiv.innerHTML = '';
+        controlsDiv.empty();
     }
 
     const numericPagination = config.paginationType === 'numeric';

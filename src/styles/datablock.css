@@ -34,3 +34,32 @@
     top: unset;
     bottom: 2px;
 }
+.datablock .board-column-collapse-icon.is-collapsed {
+    transform: rotate(-90deg);
+}
+
+.datablock .cm-relative {
+    position: relative;
+}
+
+.datablock .cm-ltr {
+    direction: ltr;
+}
+
+.datablock .cm-text-align-left {
+    text-align: left;
+}
+
+.datablock .cm-no-scroll {
+    overflow: hidden;
+}
+
+.datablock .cm-editor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 9999999999;
+}

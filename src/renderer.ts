@@ -286,7 +286,7 @@ export async function renderDataBlock(app: App, jsExecutor: JavaScriptExecutor, 
             }
         }
 
-        viewContentContainer.innerHTML = "";
+        viewContentContainer.empty();
         viewContentContainer.className = "";
         viewContentContainer.classList.add("obsidian-view", `${config.view}-view`);
         if (config.view !== "list" && config.columns) {
@@ -317,7 +317,7 @@ export async function renderDataBlock(app: App, jsExecutor: JavaScriptExecutor, 
             }
         }
 
-        paginationControlsHost.innerHTML = "";
+        paginationControlsHost.empty();
         if ((config as any).pagination && totalPages > 1 && (config as any).limit > 0) {
             renderPaginationControls(app, jsExecutor, currentPage, totalPages, config, paginationControlsHost, (newPage: number) => {
                 currentPage = newPage;

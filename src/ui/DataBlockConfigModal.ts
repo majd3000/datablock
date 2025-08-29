@@ -87,7 +87,7 @@ return data;`;
             this.config.filters = [];
         }
         
-        this.contentEl.innerHTML = '';
+        this.contentEl.empty();
         this.titleEl.setText(this.isDefaultConfig ? 'Change Default Configuration' : (this.isEditing ? 'Update Datablock' : 'Create New Datablock'));
         this.contentEl.addClass('datablock-config-modal');
         
@@ -258,8 +258,7 @@ return data;`;
             href: repoUrl
         });
         linkEl.setAttr('target', '_blank');
-        linkEl.style.textDecoration = 'none';
-        linkEl.style.color = 'var(--text-muted)';
+        linkEl.addClass('no-decoration', 'text-muted');
 
         sourceCodeSetting.descEl.empty();
         sourceCodeSetting.descEl.appendChild(linkEl);
@@ -277,8 +276,7 @@ return data;`;
         const descEl = setting.infoEl.createEl('div', { cls: 'setting-item-description' });
         const linkEl = descEl.createEl('a', { text: options.url, href: options.url });
         linkEl.setAttr('target', '_blank');
-        linkEl.style.textDecoration = 'none';
-        linkEl.style.color = 'var(--text-muted)';
+        linkEl.addClass('no-decoration', 'text-muted');
 
         setting.addButton(button => {
             button
@@ -582,7 +580,7 @@ return data;`
 
     public updatePreview(): void {
         if (!this.previewContainer) return;
-        this.previewContainer.innerHTML = '';
+        this.previewContainer.empty();
         const previewCode = this.previewContainer.createEl('pre');
         previewCode.createEl('code', { text: this.buildConfiguration() });
     }
@@ -598,7 +596,7 @@ return data;`
         if (this.currentDataSource === 'notes' && this.config.folder) {
             const summary = container.createDiv({ cls: 'datablock-fields-summary' });
             if (initiallyHidden) {
-                summary.style.display = 'none';
+                summary.toggleClass('hidden', true);
             }
             const fieldsSummary = this.detectedFields.length > 0 ? `${this.detectedFields.length} properties` : 'No properties detected';
             summary.createEl('small', { text: `${this.notesCount} Pages | ${fieldsSummary}` });
@@ -606,10 +604,10 @@ return data;`
             const inputEl = container.querySelector('.source-inputs input');
             if (inputEl) {
                 inputEl.addEventListener('focus', () => {
-                    summary.style.display = '';
+                    summary.toggleClass('hidden', false);
                 });
                 inputEl.addEventListener('blur', () => {
-                    summary.style.display = 'none';
+                    summary.toggleClass('hidden', true);
                 });
             }
         }
@@ -892,7 +890,7 @@ return data;`
         return files;
     }
     public populateDropdown(dropdown: DropdownComponent, fields: string[], selectedValue?: string, defaultValue?: string, placeholder?: string): void {
-        dropdown.selectEl.innerHTML = '';
+        dropdown.selectEl.empty();
         if (fields.length === 0) {
             dropdown.addOption('', 'No properties found');
             dropdown.setValue('');
@@ -927,7 +925,7 @@ return data;`
     private updateProgress(): void {
         const progressFill = this.contentEl.querySelector('.datablock-progress-fill') as HTMLElement;
         if (progressFill) {
-            progressFill.style.width = `${(this.currentStep / this.totalSteps) * 100}%`;
+            progressFill.setAttr('style', `width: ${(this.currentStep / this.totalSteps) * 100}%`);
         }
         const progressText = this.contentEl.querySelector('.datablock-progress-text');
         if (progressText) {
